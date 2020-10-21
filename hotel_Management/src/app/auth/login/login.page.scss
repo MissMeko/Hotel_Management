@@ -1,0 +1,68 @@
+ion-content {
+  --background: none;
+  background-image: url("../../../assets/img/login-bg-01.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+app-login {
+}
+
+.switch-text {
+}
+
+$height100: 100%;
+
+ion-grid {
+  z-index: 9999;
+  width: 100%;
+  height: $height100;
+}
+
+ion-row {
+  height: $height100;
+  align-items: center;
+}
+
+
+
+ion-col {
+  background: #222222;
+  margin-left: 18%;
+  height: 52%;
+  padding-bottom: 20%;
+}
+
+
+ion-button {
+  font-weight: 300;
+}
+
+.header-text {
+  font-size: 29px;
+  text-align: center;
+  font-weight: bolder;
+  font-family: inherit;
+}
+
+.switch-text {
+  text-align: center;
+  padding-top: 4%;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+// changing screen size
+@media (min-width: 240px) and (max-width: 768px) {
+  ion-col {
+    border: none;
+    background: #222222;
+    margin-left: 0%;
+    height: 50%;
+  }
+
+  .switch-text {
+    text-align: center;
+    padding-top: 8%;
+  }
+}
