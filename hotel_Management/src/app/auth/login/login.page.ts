@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AuthenticationService } from '../../services/authentication.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -7,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
   isLogin = true;
-  constructor() { 
+  username = '';
+  password = '';
+
+  constructor(
+    private authService: AuthenticationService
+  ) {
   }
 
   ngOnInit() {
@@ -15,8 +20,17 @@ export class LoginPage implements OnInit {
 
   }
 
-  changeForm(){
+  changeForm() {
     this.isLogin = !this.isLogin;
-    }
+  }
 
+  login() {
+    console.log('in here');
+    const { username, password } = this;
+    this.authService.Userlogin(username, password).then(response => {
+      console.log(response);
+    }).catch(error => {
+      console.dir(error);
+    });
+  }
 }

@@ -9,20 +9,20 @@
           <ion-item >
             <ion-icon slot="start" name="mail-outline"></ion-icon>
             <ion-label position="floating">Email</ion-label>
-            <ion-input type="email"></ion-input>
+            <ion-input type="email" [(ngModel)]="username"></ion-input>
           </ion-item>
           <ion-item >
             <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
             <ion-label position="floating">Password</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
           </ion-item>
         </div>
         <div padding>
           <ion-button
             size="large"
             color="primary"
-            href="/touchid"
             expand="block"
+            (click)="login()"
             >Submit</ion-button
           >
         </div>
