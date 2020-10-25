@@ -1,17 +1,17 @@
 <ion-content class="background">
-  <ion-grid >
+  <ion-grid>
     <ion-row justify-content-center *ngIf="isLogin == true">
       <ion-col size-md="6" size-lg="8" size-xs="12">
         <div class="header-text">
           <h4>Sign In</h4>
         </div>
         <div>
-          <ion-item >
+          <ion-item>
             <ion-icon slot="start" name="mail-outline"></ion-icon>
             <ion-label position="floating">Email</ion-label>
             <ion-input type="email" [(ngModel)]="username"></ion-input>
           </ion-item>
-          <ion-item >
+          <ion-item>
             <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
             <ion-label position="floating">Password</ion-label>
             <ion-input type="password" [(ngModel)]="password"></ion-input>
@@ -26,57 +26,66 @@
             >Submit</ion-button
           >
         </div>
-        <div class="switch-text" (click)="changeForm()">
-          Sign-Up Instead?
-        </div>
+        <div class="switch-text" (click)="changeForm()">Sign-Up Instead?</div>
       </ion-col>
     </ion-row>
-    <ion-row justify-content-center *ngIf="isLogin == false" >
+    <ion-row justify-content-center *ngIf="isLogin == false">
       <ion-col class="register" size-md="6" size-lg="8" size-xs="12">
         <div class="header-text">
           <h4>Sign Up</h4>
         </div>
         <div>
-          <ion-item >
-            <ion-icon slot="start" name="person-outline"></ion-icon>
-            <ion-label position="floating">First Name</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
-          <ion-item >
-            <ion-icon slot="start" name="person-add-outline"></ion-icon>
-            <ion-label position="floating">Last Name</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
-          <ion-item >
-            <ion-icon slot="start" name="mail-outline"></ion-icon>
-            <ion-label position="floating">Email</ion-label>
-            <ion-input type="email"></ion-input>
-          </ion-item>
-          <ion-item >
-            <ion-icon slot="start" name="call-outline"></ion-icon>
-            <ion-label position="floating">Contact Number</ion-label>
-            <ion-input type="tel"></ion-input>
-          </ion-item>
-          <ion-item >
-            <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-            <ion-label position="floating">Password</ion-label>
-            <ion-input type="password"></ion-input>
-          </ion-item>
+          <form [formGroup]="registrationForm">
+            <ion-item>
+              <ion-icon slot="start" name="person-outline"></ion-icon>
+              <ion-label position="floating">First Name</ion-label>
+              <ion-input type="text" formControlName="firstName"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-icon slot="start" name="person-add-outline"></ion-icon>
+              <ion-label position="floating">Last Name</ion-label>
+              <ion-input type="text" formControlName="lastName"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-icon slot="start" name="mail-outline"></ion-icon>
+              <ion-label position="floating" 
+                >Email</ion-label
+              >
+              <ion-input type="email" formControlName="email"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-icon slot="start" name="call-outline"></ion-icon>
+              <ion-label position="floating">Contact Number</ion-label>
+              <ion-input type="tel" formControlName="phoneNumber"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-label position="floating"
+                >Password</ion-label
+              >
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-label position="floating"
+                >Confirm Password</ion-label
+              >
+              <ion-input type="password" formControlName="cpassword"></ion-input>
+            </ion-item>
+          </form>
         </div>
         <div padding>
           <ion-button
             size="large"
             color="primary"
-            href="/touchid"
             expand="block"
+            (click)="register()"
+            [disabled] = "!registrationForm.valid || registrationForm.controls['cpassword'].value !== registrationForm.controls['password'].value"
             >Submit</ion-button
           >
         </div>
-        <div class="switch-text" (click)="changeForm()">
-          Sign-In?
-        </div>
+        <div class="switch-text" (click)="changeForm()">Sign-In?</div>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
-
