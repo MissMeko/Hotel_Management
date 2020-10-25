@@ -10,6 +10,18 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./public/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'pending-bookings',
+    loadChildren: () => import('./public/pending-bookings/pending-bookings.module').then( m => m.PendingBookingsPageModule)
+  },
+  {
+    path: 'past-bookings',
+    loadChildren: () => import('./public/past-bookings/past-bookings.module').then( m => m.PastBookingsPageModule)
   }
 ];
 

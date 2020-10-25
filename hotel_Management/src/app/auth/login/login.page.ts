@@ -48,6 +48,7 @@ export class LoginPage implements OnInit {
     const { username, password } = this;
     this.authService.Userlogin(username, password).then(response => {
       console.log(response);
+      this.router.navigate(['home']);
     }).catch(error => {
       console.dir(error);
     });
@@ -65,7 +66,7 @@ export class LoginPage implements OnInit {
     };
     this.authService.UserRegistration(user).then(response => {
       console.log(response);
-      this.router.navigate(['/folder']);
+      this.router.navigate(['/main']);
     }).catch(error => {
       console.dir(error);
     });

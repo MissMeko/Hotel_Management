@@ -28,4 +28,10 @@ export class AuthenticationService {
     });
   }
 
+  async getCurrentUser(){
+    return this.afAuth.currentUser.then(user => {
+      return this.userService.getUser(user.uid);
+    });
+  }
+
 }
