@@ -15,8 +15,10 @@ export interface RoomModel {
     imageName;
     number;
     price;
-    rate;
+    rating;
     userId;
     startDate;
     endDate;
+    showBookingForm?;
+    totalPricing?;
 };
