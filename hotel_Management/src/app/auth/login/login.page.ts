@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserModel } from '../../model/userModel';
 import { NavigationExtras, Router } from '@angular/router';
+import { RoomService } from '../../services/room.service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
+    private roomService: RoomService,
     private authService: AuthenticationService,
   ) {
     this.registrationForm = this.formBuilder.group({
