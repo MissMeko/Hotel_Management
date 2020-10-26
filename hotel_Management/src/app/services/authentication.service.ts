@@ -13,6 +13,10 @@ export class AuthenticationService {
   ) { }
 
   async Userlogin(username: string, password: string) {
+    console.log('in here');
+    this.afAuth.signInWithEmailAndPassword(username, password).then(res1 => {
+      console.log(res1);
+    })
     const res = await this.afAuth.signInWithEmailAndPassword(username, password);
     return res;
   }
@@ -32,6 +36,10 @@ export class AuthenticationService {
     return this.afAuth.currentUser.then(user => {
       return this.userService.getUser(user.uid);
     });
+  }
+
+  async logOut() {
+    return await this.afAuth.signOut();
   }
 
 }

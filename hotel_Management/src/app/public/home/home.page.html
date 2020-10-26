@@ -5,9 +5,87 @@
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-button>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar showCancelButton="focus" placeholder="Filter Rooms"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
-
-
 <ion-content>
-
+  <div class="ion-column">
+    <ion-grid>
+      <div class="booking-header">Available</div>
+      <ion-row style="height: 60%">
+        <ion-col
+          sizeLg="2"
+          sizeMd="4"
+          sizeXs="12"
+          *ngFor="let item of imageList"
+        >
+          <ion-card style="width: 100%">
+            <ion-item>
+              <h2>Marty McFly</h2>
+            </ion-item>
+            <img src="{{item}}" />
+            <ion-card-content>
+              <p>
+                Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me
+                that you built a time machine... out of a DeLorean?! Whoa. This
+                is heavy.
+              </p>
+            </ion-card-content>
+            <ion-row>
+              <ion-col>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <div>Ratings 12</div>
+              </ion-col>
+              <ion-col>
+                <ion-button>
+                  <div>Book Now!</div>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <div class="booking-header">Booked</div>
+      <ion-row style="height: 60%">
+        <ion-col
+          sizeLg="2"
+          sizeMd="4"
+          sizeXs="12"
+          *ngFor="let item of imageList"
+        >
+          <ion-card style="width: 100%">
+            <ion-item>
+              <h2>Marty McFly</h2>
+            </ion-item>
+            <img src="{{item}}" />
+            <ion-card-content>
+              <p>
+                Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me
+                that you built a time machine... out of a DeLorean?! Whoa. This
+                is heavy.
+              </p>
+            </ion-card-content>
+            <ion-row>
+              <ion-col>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <div>Ratings 12</div>
+              </ion-col>
+              <ion-col>
+                <ion-button>
+                  <div>Book Now!</div>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserModel } from '../../model/userModel';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -45,10 +45,20 @@ export class LoginPage implements OnInit {
   }
 
   login() {
+    console.log('user');
     const { username, password } = this;
     this.authService.Userlogin(username, password).then(response => {
-      console.log(response);
-      this.router.navigate(['home']);
+        console.log(response);
+        this.authService.getCurrentUser().then(res => {
+        console.log(res);
+        const navigationExtras: NavigationExtras = {
+          state: {
+            userInfo: res
+          }
+        };
+        console.log(navigationExtras);
+        this.router.navigate(['home'], navigationExtras);
+      });
     }).catch(error => {
       console.dir(error);
     });
@@ -65,8 +75,16 @@ export class LoginPage implements OnInit {
       userType: 'guest',
     };
     this.authService.UserRegistration(user).then(response => {
-      console.log(response);
-      this.router.navigate(['/main']);
+      this.authService.getCurrentUser().then(res => {
+        console.log(response);
+        const navigationExtras: NavigationExtras = {
+          state: {
+            userInfo: res
+          }
+        };
+        console.log(navigationExtras);
+        this.router.navigate(['home'], navigationExtras);
+      });
     }).catch(error => {
       console.dir(error);
     });
