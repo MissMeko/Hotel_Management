@@ -17,7 +17,9 @@ export class RoomService {
   // }
 
   async getAllRooms() {
+    console.log(this.rooomCollection);
     return await this.rooomCollection.snapshotChanges().pipe(
+      take(1),
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
