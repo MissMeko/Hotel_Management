@@ -24,7 +24,7 @@
             <ion-item>
               <h2>Marty McFly</h2>
             </ion-item>
-            <img src="{{item}}" />
+            <img src="{{item.src}}" />
             <ion-card-content>
               <p>
                 Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me
@@ -41,9 +41,33 @@
                 <div>Ratings 12</div>
               </ion-col>
               <ion-col>
-                <ion-button>
+                <ion-button (click)="showBookingForm(item)">
                   <div>Book Now!</div>
                 </ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="item.showBookingForm">
+              <ion-col>
+                <ion-item color="none">
+                  <ion-label position="floating">Start Date</ion-label>
+                  <ion-datetime
+                    value="2020-10-26"
+                    placeholder="Select Date"
+                  ></ion-datetime>
+
+                  <ion-label position="floating">End Date</ion-label>
+                  <ion-datetime
+                  value="2020-10-26"
+                    placeholder="Select Date"
+                  ></ion-datetime>
+                  <div>
+                    Total Price: R2000 
+                  </div>
+                  <br>
+                  <ion-button (click)="processBooking(item)">
+                    <div>Submit</div>
+                  </ion-button>
+                </ion-item>
               </ion-col>
             </ion-row>
           </ion-card>
