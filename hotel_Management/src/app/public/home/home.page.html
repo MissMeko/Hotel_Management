@@ -18,18 +18,23 @@
           sizeLg="2"
           sizeMd="4"
           sizeXs="12"
-          *ngFor="let item of imageList"
+          *ngFor="let room of availableRooms"
         >
           <ion-card style="width: 100%">
             <ion-item>
-              <h2>Marty McFly</h2>
+              <h2>Room {{room.number}}</h2>
             </ion-item>
-            <img src="{{item.src}}" />
+            <img src="assets/img/hotels/{{room.imageName}}" />
             <ion-card-content>
               <p>
-                Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me
-                that you built a time machine... out of a DeLorean?! Whoa. This
-                is heavy.
+                {{room.description}}
+              </p> <br>
+              <p>
+                Room Type: {{room.roomType}}
+              </p>
+              <br>
+              <p>
+                {{room.price | currency: 'R'}}
               </p>
             </ion-card-content>
             <ion-row>
@@ -38,33 +43,33 @@
                 <ion-icon name="star"></ion-icon>
                 <ion-icon name="star"></ion-icon>
                 <ion-icon name="star"></ion-icon>
-                <div>Ratings 12</div>
+                <div>Ratings {{room.rating}}</div>
               </ion-col>
               <ion-col>
-                <ion-button (click)="showBookingForm(item)">
+                <ion-button (click)="showBookingForm(room)">
                   <div>Book Now!</div>
                 </ion-button>
               </ion-col>
             </ion-row>
-            <ion-row *ngIf="item.showBookingForm">
+            <ion-row *ngIf="room.showBookingForm">
               <ion-col>
                 <ion-item color="none">
                   <ion-label position="floating">Start Date</ion-label>
                   <ion-datetime
+                  [(ngModel)] = "room.startDate"
                     value="2020-10-26"
                     placeholder="Select Date"
                   ></ion-datetime>
 
                   <ion-label position="floating">End Date</ion-label>
                   <ion-datetime
+                 
                   value="2020-10-26"
+                  [(ngModel)] = "room.endDate"
                     placeholder="Select Date"
                   ></ion-datetime>
-                  <div>
-                    Total Price: R2000 
-                  </div>
                   <br>
-                  <ion-button (click)="processBooking(item)">
+                  <ion-button (click)="processBooking(room)">
                     <div>Submit</div>
                   </ion-button>
                 </ion-item>
@@ -79,18 +84,16 @@
           sizeLg="2"
           sizeMd="4"
           sizeXs="12"
-          *ngFor="let item of imageList"
+          *ngFor="let room of bookedRooms"
         >
           <ion-card style="width: 100%">
             <ion-item>
-              <h2>Marty McFly</h2>
+              <h2>Room {{room.number}}</h2>
             </ion-item>
-            <img src="{{item}}" />
+            <img  src="assets/img/hotels/{{room.imageName}}" />
             <ion-card-content>
               <p>
-                Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me
-                that you built a time machine... out of a DeLorean?! Whoa. This
-                is heavy.
+                {{room.description}}
               </p>
             </ion-card-content>
             <ion-row>
@@ -99,12 +102,12 @@
                 <ion-icon name="star"></ion-icon>
                 <ion-icon name="star"></ion-icon>
                 <ion-icon name="star"></ion-icon>
-                <div>Ratings 12</div>
+                <div>Ratings {{room.rating}}</div>
               </ion-col>
+            </ion-row>
+            <ion-row>
               <ion-col>
-                <ion-button>
-                  <div>Book Now!</div>
-                </ion-button>
+                Booked From {{room.startDate | date}} to {{room.endDate | date}}
               </ion-col>
             </ion-row>
           </ion-card>
