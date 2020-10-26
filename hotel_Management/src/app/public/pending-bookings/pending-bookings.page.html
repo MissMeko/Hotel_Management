@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Pending Bookings</ion-title>
+    <ion-title>Current Booking</ion-title>
     <ion-button slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-button>
@@ -9,7 +9,55 @@
     <ion-searchbar showCancelButton="focus" placeholder="Filter Rooms"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  <div class="ion-column">
+    <ion-grid>
+      <ion-row style="height: 60%">
+        <ion-col
+          sizeLg="2"
+          sizeMd="4"
+          sizeXs="12"
+          *ngFor="let room of bookedRooms"
+        >
+          <ion-card style="width: 100%">
+            <ion-item>
+              <h2>Room {{room.number}}</h2>
+            </ion-item>
+            <img src="assets/img/hotels/{{room.imageName}}" />
+            <ion-card-content>
+              <p>
+                {{room.description}}
+              </p> <br>
+              <p>
+                Room Type: {{room.roomType}}
+              </p>
+              <br>
+              <p>
+                {{room.price | currency: 'R'}}
+              </p>
+            </ion-card-content>
+            <ion-row>
+              <ion-col>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <div>Ratings {{room.rating}}</div>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="cancelBooking(room)">
+                  <div>Cancel Booking</div>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                Booked From {{room.startDate | date}} to {{room.endDate | date}}
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
