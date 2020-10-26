@@ -20,6 +20,7 @@ export class PendingBookingsPage implements OnInit {
     private authenticationSerivce: AuthenticationService,
     private generalService: GeneralService,
   ) {
+    console.log('in here');
     this.authenticationSerivce.getCurrentUser().then(response => {
       this.currentUser = response;
       console.log(this.currentUser);
@@ -31,6 +32,9 @@ export class PendingBookingsPage implements OnInit {
     this.roomService.getAllRooms().then(response => {
       console.log(response);
       this.bookedRooms = response.filter(element => element.userId === this.currentUser.id);
+      this.bookedRooms.forEach(room => {
+        room.showBookingForm = false;
+      });
     }).catch(error => {
       console.dir(error);
     });
@@ -49,6 +53,17 @@ export class PendingBookingsPage implements OnInit {
     }).catch(error => {
       console.dir(error);
       this.generalService.presentPopup("Failed to cancel booking");
+    });
+  }
+
+  editBooking(room: RoomModel){
+    this.roomService.editRoom(room).then(res => {
+      this.generalService.presentPopup('Booking edited', 'Success').then(() => {
+        this.refreshRooms();
+      });
+    }).catch(error => {
+      console.dir(error);
+      this.generalService.presentPopup('Failed to edit booking', 'Error');
     });
   }
 
