@@ -9,18 +9,12 @@ import { RoomService } from '../../services/room.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  // imageList = [
-  //   { showBookingForm: false, src: 'assets/img/hotels/hotel_1.jpg' },
-  //   { showBookingForm: false, src: 'assets/img/hotels/hotel_1_2.jpg' },
-  //   { showBookingForm: false, src: 'assets/img/hotels/hotel_1_4.jpg' },
-  //   { showBookingForm: false, src: 'assets/img/hotels/hotel_1_5.jpg' },
-  //   { showBookingForm: false, src: 'assets/img/hotels/hotel_1_6.jpg' }
-  // ];
   user: UserModel;
   allRooms: RoomModel[];
   bookedRooms: RoomModel[];
   currentRooms: RoomModel[];
   availableRooms: RoomModel[];
+  searchTerm: string = '';
 
   bookingFormFlag: boolean;
   constructor(
@@ -29,16 +23,18 @@ export class HomePage implements OnInit {
     private roomService: RoomService,
     private generalService: GeneralService,
   ) {
+    this.generalService.present();
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.user = this.router.getCurrentNavigation().extras.state.userInfo;
       }
       console.log(this.user);
       this.refreshRooms();
+      this.generalService.dismiss();
     });
   }
 
-  refreshRooms(){
+  refreshRooms() {
     this.roomService.getAllRooms().then(response => {
       console.log(response);
       this.availableRooms = response.filter(element => element.userId === '');
@@ -82,4 +78,20 @@ export class HomePage implements OnInit {
     });
   }
 
+
+  setFilteredItems() {
+    console.log(this.availableRooms);
+    const tempArray = [];
+    this.availableRooms.forEach(room => {
+      if (room.roomType && room.roomType.indexOf(this.searchTerm) !== -1) {
+        tempArray.push(room);
+      }
+    });
+    this.availableRooms = tempArray;
+    if (this.searchTerm === '') {
+      this.generalService.present();
+      this.refreshRooms();
+      this.generalService.dismiss();
+    }
+  }
 }
