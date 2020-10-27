@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserModel } from '../../model/userModel';
 import { NavigationExtras, Router } from '@angular/router';
 import { RoomService } from '../../services/room.service';
+import { GeneralService } from '../../services/general.service';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,8 @@ import { RoomService } from '../../services/room.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  loginForm: FormGroup;
   registrationForm: FormGroup;
-
   isLogin = true;
   username = '';
   password = '';
@@ -21,7 +22,7 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private roomService: RoomService,
+    private generalService: GeneralService,
     private authService: AuthenticationService,
   ) {
     this.registrationForm = this.formBuilder.group({
@@ -32,6 +33,11 @@ export class LoginPage implements OnInit {
       password: ['', [Validators.required]],
       cpassword: ['', [Validators.required]],
     });
+
+    this.loginForm = this.formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
   }
 
   ngOnInit() {
@@ -40,34 +46,40 @@ export class LoginPage implements OnInit {
   }
 
   changeForm() {
-    this.username = '';
-    this.password = '';
+    this.loginForm.reset();
     this.registrationForm.reset();
     this.isLogin = !this.isLogin;
   }
 
   login() {
     console.log('user');
-    const { username, password } = this;
-    this.authService.Userlogin(username, password).then(response => {
-        console.log(response);
-        this.authService.getCurrentUser().then(res => {
+    this.username = this.loginForm.controls['username'].value;
+    this.password = this.loginForm.controls['password'].value;
+    console.log(this.username, this.password);
+    this.generalService.present();
+    this.authService.Userlogin(this.username, this.password).then(response => {
+      console.log(response);
+      this.authService.getCurrentUser().then(res => {
         console.log(res);
         const navigationExtras: NavigationExtras = {
           state: {
             userInfo: res
           }
         };
+        this.generalService.dismiss();
         console.log(navigationExtras);
         this.router.navigate(['home'], navigationExtras);
       });
     }).catch(error => {
       console.dir(error);
+      this.generalService.dismiss();
+      this.generalService.presentPopup('Username or password is incorrect', 'Error');
     });
   }
 
   register() {
     console.log(this.registrationForm);
+    this.generalService.present();
     const user: UserModel = {
       firstName: this.registrationForm.controls['firstName'].value,
       lastName: this.registrationForm.controls['lastName'].value,
@@ -76,8 +88,10 @@ export class LoginPage implements OnInit {
       password: this.registrationForm.controls['password'].value,
       userType: 'guest',
     };
+    this.registrationForm.reset();
     this.authService.UserRegistration(user).then(response => {
       this.authService.getCurrentUser().then(res => {
+        this.generalService.dismiss();
         console.log(response);
         const navigationExtras: NavigationExtras = {
           state: {
@@ -88,7 +102,9 @@ export class LoginPage implements OnInit {
         this.router.navigate(['home'], navigationExtras);
       });
     }).catch(error => {
+      this.generalService.dismiss();
       console.dir(error);
+      this.generalService.presentPopup('Failed to register', 'Error');
     });
   }
 }
