@@ -52,6 +52,12 @@ ion-button {
   cursor: pointer;
 }
 
+.logo-image {
+  height: 0%;
+  padding-left: 46%;
+  margin-top: -2%;
+}
+
 // changing screen size
 @media (min-width: 240px) and (max-width: 768px) {
   ion-col {
@@ -64,5 +70,11 @@ ion-button {
   .switch-text {
     text-align: center;
     padding-top: 8%;
+  }
+
+  .logo-image {
+    height: 0%;
+    padding-left: 20%;
+    margin-top: -5%;
   }
 }

@@ -1,28 +1,36 @@
 <ion-content class="background">
+ 
   <ion-grid>
+    <ion-row class="logo-image">
+      <img src="../../../assets/logo.png" alt="main-logo">
+    </ion-row>
     <ion-row justify-content-center *ngIf="isLogin == true">
       <ion-col size-md="6" size-lg="8" size-xs="12">
         <div class="header-text">
           <h4>Sign In</h4>
+
         </div>
-        <div>
-          <ion-item>
-            <ion-icon slot="start" name="mail-outline"></ion-icon>
-            <ion-label position="floating">Email</ion-label>
-            <ion-input type="email" [(ngModel)]="username"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-            <ion-label position="floating">Password</ion-label>
-            <ion-input type="password" [(ngModel)]="password"></ion-input>
-          </ion-item>
-        </div>
+        <form [formGroup]="loginForm">
+          <div>
+            <ion-item>
+              <ion-icon slot="start" name="mail-outline"></ion-icon>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="email" formControlName="username"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+          </div>
+        </form>
         <div padding>
           <ion-button
             size="large"
             color="primary"
             expand="block"
             (click)="login()"
+            [disabled]="!loginForm.valid"
             >Submit</ion-button
           >
         </div>
@@ -48,9 +56,7 @@
             </ion-item>
             <ion-item>
               <ion-icon slot="start" name="mail-outline"></ion-icon>
-              <ion-label position="floating" 
-                >Email</ion-label
-              >
+              <ion-label position="floating">Email</ion-label>
               <ion-input type="email" formControlName="email"></ion-input>
             </ion-item>
             <ion-item>
@@ -60,17 +66,16 @@
             </ion-item>
             <ion-item>
               <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-              <ion-label position="floating"
-                >Password</ion-label
-              >
+              <ion-label position="floating">Password</ion-label>
               <ion-input type="password" formControlName="password"></ion-input>
             </ion-item>
             <ion-item>
               <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-              <ion-label position="floating"
-                >Confirm Password</ion-label
-              >
-              <ion-input type="password" formControlName="cpassword"></ion-input>
+              <ion-label position="floating">Confirm Password</ion-label>
+              <ion-input
+                type="password"
+                formControlName="cpassword"
+              ></ion-input>
             </ion-item>
           </form>
         </div>
@@ -80,7 +85,7 @@
             color="primary"
             expand="block"
             (click)="register()"
-            [disabled] = "!registrationForm.valid || registrationForm.controls['cpassword'].value !== registrationForm.controls['password'].value"
+            [disabled]="!registrationForm.valid || registrationForm.controls['cpassword'].value !== registrationForm.controls['password'].value"
             >Submit</ion-button
           >
         </div>
