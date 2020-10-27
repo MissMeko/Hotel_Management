@@ -6,7 +6,12 @@
     </ion-button>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar showCancelButton="focus" placeholder="Filter Rooms"></ion-searchbar>
+    <ion-searchbar
+      showCancelButton="focus"
+      [(ngModel)]="searchTerm"
+      (ionChange)="setFilteredItems()"
+      placeholder="Filter Rooms"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -26,26 +31,20 @@
             </ion-item>
             <img src="assets/img/hotels/{{room.imageName}}" />
             <ion-card-content>
-              <p>
-                {{room.description}}
-              </p> <br>
-              <p>
-                Room Type: {{room.roomType}}
-              </p>
-              <br>
-              <p>
-                {{room.price | currency: 'R'}}
-              </p>
+              <p>{{room.description}}</p>
+              <br />
+              <p>Room Type: {{room.roomType}}</p>
+              <br />
+              <p>{{room.price | currency: 'R'}}</p>
             </ion-card-content>
-            <ion-row>
-              <ion-col>
+            <ion-row class="rating-warapper">
+              <ion-col  
+              *ngFor="let item of [].constructor(room.rating)">
                 <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <div>Ratings {{room.rating}}</div>
               </ion-col>
-              <ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col *ngIf="user.userType === 'guest'">
                 <ion-button (click)="showBookingForm(room)">
                   <div>Book Now!</div>
                 </ion-button>
@@ -56,19 +55,18 @@
                 <ion-item color="none">
                   <ion-label position="floating">Start Date</ion-label>
                   <ion-datetime
-                  [(ngModel)] = "room.startDate"
+                    [(ngModel)]="room.startDate"
                     value="2020-10-26"
                     placeholder="Select Date"
                   ></ion-datetime>
 
                   <ion-label position="floating">End Date</ion-label>
                   <ion-datetime
-                 
-                  value="2020-10-26"
-                  [(ngModel)] = "room.endDate"
+                    value="2020-10-26"
+                    [(ngModel)]="room.endDate"
                     placeholder="Select Date"
                   ></ion-datetime>
-                  <br>
+                  <br />
                   <ion-button (click)="processBooking(room)">
                     <div>Submit</div>
                   </ion-button>
@@ -90,19 +88,14 @@
             <ion-item>
               <h2>Room {{room.number}}</h2>
             </ion-item>
-            <img  src="assets/img/hotels/{{room.imageName}}" />
+            <img src="assets/img/hotels/{{room.imageName}}" />
             <ion-card-content>
-              <p>
-                {{room.description}}
-              </p>
+              <p>{{room.description}}</p>
             </ion-card-content>
-            <ion-row>
-              <ion-col>
+            <ion-row class="rating-warapper">
+              <ion-col  
+              *ngFor="let item of [].constructor(room.rating)">
                 <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <div>Ratings {{room.rating}}</div>
               </ion-col>
             </ion-row>
             <ion-row>
