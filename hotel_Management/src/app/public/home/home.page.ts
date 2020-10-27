@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomModel, UserModel } from '../../model/userModel';
 import { GeneralService } from '../../services/general.service';
@@ -14,9 +15,22 @@ export class HomePage implements OnInit {
   bookedRooms: RoomModel[];
   currentRooms: RoomModel[];
   availableRooms: RoomModel[];
+
+  showAddForm: boolean;
   searchTerm: string = '';
+  dateToday = new Date();
 
   bookingFormFlag: boolean;
+  roomForm: NgForm;
+  //add form
+  number = '';
+  roomType = '';
+  price = '';
+  rating = '';
+  startDate = '';
+  endDate = '';
+  description = '';
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -32,6 +46,8 @@ export class HomePage implements OnInit {
       this.refreshRooms();
       this.generalService.dismiss();
     });
+
+
   }
 
   refreshRooms() {
@@ -93,5 +109,89 @@ export class HomePage implements OnInit {
       this.refreshRooms();
       this.generalService.dismiss();
     }
+  }
+
+  removeRoom(room: RoomModel) {
+    this.roomService.deleteRoom(room.id).then(res => {
+      this.generalService.dismiss();
+      this.refreshRooms();
+      this.generalService.presentPopup('Room deleted.', 'Success');
+    }).catch(error => {
+      this.generalService.dismiss();
+      this.generalService.presentPopup('Failed to delete room');
+    });
+  }
+
+  toggleRoomForm() {
+    this.showAddForm = !this.showAddForm;
+  }
+
+  async addRoom() {
+    this.generalService.present();
+    if (this.price !== '' ||
+      this.number !== '' ||
+      this.roomType !== '' ||
+      this.description !== '' ||
+      this.rating !== '') {
+      const newRoom: RoomModel = {
+        number: this.number,
+        price: this.price,
+        roomType: this.roomType,
+        description: this.description,
+        endDate: '',
+        startDate: '',
+        rating: Number(this.rating),
+        userId: '',
+        checkIn: false,
+        imageName: 'room6.jpg',
+      };
+      this.roomService.addRoom(newRoom).then(res => {
+        this.number = '';
+        this.roomType = '';
+        this.price = '';
+        this.rating = '';
+        this.startDate = '';
+        this.endDate = '';
+        this.description = '';
+        this.showAddForm = false;
+        this.generalService.dismiss();
+        this.refreshRooms();
+        console.log(res);
+      }).catch(error => {
+        this.generalService.dismiss();
+        console.dir(error);
+      });
+    } else {
+      this.generalService.presentPopup('All fields are required', 'Error');
+    }
+    // this.generalService.present();
+    // const room: RoomModel = {
+    //   // id?;
+    //   roomType: 'Standard',
+    //   description: 'Some description',
+    //   imageName: 'this image',
+    //   number: '123',
+    //   price: '120',
+    //   rating: 5,
+    //   userId: '',
+    //   startDate: '',
+    //   endDate: '',
+    //   // showBookingForm?;
+    //   // totalPricing?;
+    //   checkIn: false,
+    // };
+    // this.roomService.addRoom(room).then(res => {
+    //   this.generalService.dismiss();
+    //   this.refreshRooms();
+    //   console.log(res);
+    // }).catch(error => {
+    //   this.generalService.dismiss();
+
+    //   console.dir(error);
+    // });
+  }
+
+  uploadImage() {
+    console.log('now upload image')
   }
 }
