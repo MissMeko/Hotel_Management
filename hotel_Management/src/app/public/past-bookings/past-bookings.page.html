@@ -1,15 +1,67 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Past Bookings</ion-title>
+    <ion-title>Current Bookings</ion-title>
     <ion-button slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-button>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar showCancelButton="focus" placeholder="Filter Rooms"></ion-searchbar>
+    <ion-searchbar 
+    showCancelButton="focus"
+    [(ngModel)]="searchTerm"
+    (ionChange)="setFilteredItems()"
+    placeholder="Filter Rooms"
+    >
+    </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="ion-column">
+    <ion-grid>
+      <ion-row style="height: 60%">
+        <ion-col
+          sizeLg="2"
+          sizeMd="4"
+          sizeXs="12"
+          *ngFor="let room of bookedRooms"
+        >
+          <ion-card style="width: 100%">
+            <ion-item>
+              <h2>Room {{room.number}}</h2>
+            </ion-item>
+            <img src="assets/img/hotels/{{room.imageName}}" />
+            <ion-card-content>
+              <p>
+                {{room.description}}
+              </p> <br>
+              <p>
+                Room Type: {{room.roomType}}
+              </p>
+              <br>
+              <p>
+                {{room.price | currency: 'R'}}
+              </p>
+            </ion-card-content>
+            <ion-row class="rating-warapper">
+              <ion-col  
+              *ngFor="let item of [].constructor(room.rating)">
+                <ion-icon name="star"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-item>
+              <b> Total Price: {{room.totalPricing | currency : 'R'}} </b>
+            </ion-item>
+            </ion-row>
+            <ion-row>
+              <ion-item>
+                <b>  Booked from {{room.startDate | date}} to {{room.endDate | date}} </b>
+            </ion-item>
+            </ion-row>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
