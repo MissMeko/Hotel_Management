@@ -21,4 +21,5 @@ export interface RoomModel {
     endDate;
     showBookingForm?;
     totalPricing?;
+    checkIn: boolean;
 };
