@@ -12,9 +12,9 @@ export class RoomService {
     this.rooomCollection = fireStore.collection<RoomModel>('rooms');
   }
 
-  // async addRoom(room: RoomModel){
-  //   return this.rooomCollection.add(room).then;
-  // }
+  async addRoom(room: RoomModel){
+    return this.rooomCollection.add(room);
+  }
 
   async getAllRooms() {
     console.log(this.rooomCollection);
