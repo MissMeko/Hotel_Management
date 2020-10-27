@@ -1,14 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Current Booking</ion-title>
+    <ion-title>Pending Booking</ion-title>
     <ion-button slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-button>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar
-      showCancelButton="focus"
-      placeholder="Filter Rooms"
+    showCancelButton="focus"
+    [(ngModel)]="searchTerm"
+    (ionChange)="setFilteredItems()"
+    placeholder="Filter Rooms"
     ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
@@ -16,69 +18,80 @@
   <div class="ion-column">
     <ion-grid>
       <ion-row style="height: 60%">
-        <ion-col
-          sizeLg="2"
-          sizeMd="4"
-          sizeXs="12"
-          *ngFor="let room of bookedRooms"
-        >
+        <ion-col sizeLg="2" sizeMd="4" sizeXs="12"  *ngFor="let room of bookedRooms" >
           <ion-card style="width: 100%">
             <ion-item>
               <h2>Room {{room.number}}</h2>
             </ion-item>
             <img src="assets/img/hotels/{{room.imageName}}" />
             <ion-card-content>
+             
               <p>{{room.description}}</p>
               <br />
               <p>Room Type: {{room.roomType}}</p>
-              <br />
-              <p>{{room.price | currency: 'R'}}</p>
+           
             </ion-card-content>
-            <ion-row>
-              <ion-col>
+            <ion-row class="rating-warapper">
+              <ion-col  
+              *ngFor="let item of [].constructor(room.rating)">
                 <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <div>Ratings {{room.rating}}</div>
-              </ion-col>
-              <ion-col>
               </ion-col>
             </ion-row>
-            <ion-row>
-              <ion-col>
+            <ion-row padding>
+              <ion-item>
+             <b > Total Price: {{room.totalPricing | currency : 'R'}} </b>
+            </ion-item>
+            </ion-row>
+            <ion-row >
+              <ion-col >
+                <ion-item>
                 Booked From {{room.startDate | date}} to {{room.endDate | date}}
+              </ion-item>
               </ion-col>
             </ion-row>
-            <div>
-              <ion-button (click)="cancelBooking(room)">
-                <ion-icon name="add-outline"></ion-icon>
-                <div>Cancel Booking</div>
+            <ion-item padding *ngIf="currentUser.userType === 'cleck'">
+              <ion-button *ngIf="!room.checkIn" (click)="processRoomCheckin(room, true)">
+                <ion-icon name="return-up-forward-outline"></ion-icon>
+                <div>Check In</div>
               </ion-button>
-              <ion-button (click)="room.showBookingForm = !room.showBookingForm">
-                <ion-icon name="create-outline"></ion-icon>
-                <div>Edit Booking</div>
+              <ion-button *ngIf="room.checkIn" (click)="processRoomCheckin(room, false)">
+                <ion-icon name="return-up-back-outline"></ion-icon>
+                <div>Check Out</div>
               </ion-button>
-            </div>
-            <ion-item color="none" *ngIf="room.showBookingForm">
-              <ion-label position="floating">Start Date</ion-label>
-              <ion-datetime
-              [(ngModel)] = "room.startDate"
-                value="2020-10-26"
-                placeholder="Select Date"
-              ></ion-datetime>
+            </ion-item>
 
-              <ion-label position="floating">End Date</ion-label>
-              <ion-datetime
-             
-              value="2020-10-26"
-              [(ngModel)] = "room.endDate"
-                placeholder="Select Date"
-              ></ion-datetime>
-              <br>
-              <ion-button (click)="editBooking(room)">
-                <div>Submit</div>
-              </ion-button>
+            <ion-item *ngIf="currentUser.userType !== 'cleck'">
+              <div>
+                <ion-button (click)="cancelBooking(room)">
+                  <ion-icon name="add-outline"></ion-icon>
+                  <div>Cancel Booking</div>
+                </ion-button>
+                <ion-button
+                  (click)="room.showBookingForm = !room.showBookingForm"
+                >
+                  <ion-icon name="create-outline"></ion-icon>
+                  <div>Edit Booking</div>
+                </ion-button>
+              </div>
+              <ion-item color="none" *ngIf="room.showBookingForm">
+                <ion-label position="floating">Start Date</ion-label>
+                <ion-datetime
+                  [(ngModel)]="room.startDate"
+                  value="2020-10-26"
+                  placeholder="Select Date"
+                ></ion-datetime>
+
+                <ion-label position="floating">End Date</ion-label>
+                <ion-datetime
+                  value="2020-10-26"
+                  [(ngModel)]="room.endDate"
+                  placeholder="Select Date"
+                ></ion-datetime>
+                <br />
+                <ion-button (click)="editBooking(room)">
+                  <div>Submit</div>
+                </ion-button>
+              </ion-item>
             </ion-item>
           </ion-card>
         </ion-col>
