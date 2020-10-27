@@ -17,6 +17,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 // 2. Import firebase configurations
 import { environment } from 'src/environments/environment';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -24,6 +25,8 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    FormsModule, 
+    ReactiveFormsModule,
         // 3. Initialize
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule, // firestore
