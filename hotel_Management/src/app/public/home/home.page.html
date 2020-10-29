@@ -6,6 +6,10 @@
     </ion-button>
   </ion-toolbar>
   <ion-toolbar>
+    <ion-button (click)="showReports()">
+      <ion-icon name="checkmark-done-outline"></ion-icon>
+      Show Reports
+    </ion-button>
     <ion-searchbar
       showCancelButton="focus"
       [(ngModel)]="searchTerm"
@@ -14,58 +18,84 @@
     ></ion-searchbar>
   </ion-toolbar>
   <div *ngIf="showAddForm">
-    <form #roomForm="ngForm"  class="add-room-wrapper">
+    <form #roomForm="ngForm" class="add-room-wrapper">
       <ion-grid class="add-grid">
         <ion-row>
           <ion-col>
-          <ion-item>
-            <ion-label position="floating">Room Name</ion-label>
-            <ion-input type="number" [(ngModel)]="number" [ngModelOptions]="{standalone: true}" required></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label position="floating">Room Type</ion-label>
-            <ion-input type="email" [(ngModel)]="roomType" [ngModelOptions]="{standalone: true}" required></ion-input>
-          </ion-item>
-        </ion-col>
+            <ion-item>
+              <ion-label position="floating">Room Name</ion-label>
+              <ion-input
+                type="number"
+                [(ngModel)]="number"
+                [ngModelOptions]="{standalone: true}"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label position="floating">Room Type</ion-label>
+              <ion-input
+                type="email"
+                [(ngModel)]="roomType"
+                [ngModelOptions]="{standalone: true}"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
             <ion-item>
               <ion-label position="floating">Price</ion-label>
-              <ion-input type="text" [(ngModel)]="price" [ngModelOptions]="{standalone: true}" required></ion-input>
+              <ion-input
+                type="text"
+                [(ngModel)]="price"
+                [ngModelOptions]="{standalone: true}"
+                required
+              ></ion-input>
             </ion-item>
           </ion-col>
           <ion-col>
             <ion-item>
               <ion-label position="floating">Rating</ion-label>
-              <ion-input type="number" [(ngModel)]="rating" [ngModelOptions]="{standalone: true}" required></ion-input>
+              <ion-input
+                type="number"
+                [(ngModel)]="rating"
+                [ngModelOptions]="{standalone: true}"
+                required
+              ></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-item class="add-grid-text-area">
-            <ion-textarea [(ngModel)]="description"
-              rows={6} cols={20}
+            <ion-textarea
+              [(ngModel)]="description"
+              rows="{6}"
+              cols="{20}"
               [ngModelOptions]="{standalone: true}"
-               placeholder="Enter any notes here..."
-               required
-                ></ion-textarea>
+              placeholder="Enter any notes here..."
+              required
+            ></ion-textarea>
           </ion-item>
         </ion-row>
         <ion-row>
           <ion-item>
             Upload Image
-            <ion-icon name="cloud-upload-outline" (click)="uploadImage()"></ion-icon>
+            <ion-icon
+              name="cloud-upload-outline"
+              (click)="uploadImage()"
+            ></ion-icon>
           </ion-item>
         </ion-row>
       </ion-grid>
     </form>
     <ion-button
-     class="add-room" 
-     [disabled]="!roomForm.valid"
-     (click)="addRoom()">
+      class="add-room"
+      [disabled]="!roomForm.valid"
+      (click)="addRoom()"
+    >
       <ion-icon name="checkmark-done-outline"></ion-icon>
       Add Room
     </ion-button>
@@ -95,8 +125,7 @@
               <p>{{room.price | currency: 'R'}}</p>
             </ion-card-content>
             <ion-row class="rating-warapper">
-              <ion-col  
-              *ngFor="let item of [].constructor(room.rating)">
+              <ion-col *ngFor="let item of [].constructor(room.rating)">
                 <ion-icon name="star"></ion-icon>
               </ion-col>
             </ion-row>
@@ -156,8 +185,7 @@
               <p>{{room.description}}</p>
             </ion-card-content>
             <ion-row class="rating-warapper">
-              <ion-col  
-              *ngFor="let item of [].constructor(room.rating)">
+              <ion-col *ngFor="let item of [].constructor(room.rating)">
                 <ion-icon name="star"></ion-icon>
               </ion-col>
             </ion-row>
@@ -172,7 +200,12 @@
     </ion-grid>
   </div>
 </ion-content>
-<ion-fab *ngIf="user.userType === 'owner'" vertical="top" horizontal="end" slot="fixed"> 
+<ion-fab
+  *ngIf="user.userType === 'owner'"
+  vertical="top"
+  horizontal="end"
+  slot="fixed"
+>
   <ion-fab-button (click)="toggleRoomForm()">
     <ion-icon name="add-circle-outline"></ion-icon>
   </ion-fab-button>

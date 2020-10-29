@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'past-bookings',
     loadChildren: () => import('./public/past-bookings/past-bookings.module').then( m => m.PastBookingsPageModule)
+  },
+  {
+    path: 'reports',
+    loadChildren: () => import('./public/reports/reports.module').then( m => m.ReportsPageModule)
   }
 ];
 

@@ -53,6 +53,7 @@ export class HomePage implements OnInit {
   refreshRooms() {
     this.roomService.getAllRooms().then(response => {
       console.log(response);
+      this.allRooms = response;
       this.availableRooms = response.filter(element => element.userId === '');
       this.bookedRooms = response.filter(element => element.userId !== '');
       this.availableRooms.forEach(room => {
@@ -164,34 +165,13 @@ export class HomePage implements OnInit {
     } else {
       this.generalService.presentPopup('All fields are required', 'Error');
     }
-    // this.generalService.present();
-    // const room: RoomModel = {
-    //   // id?;
-    //   roomType: 'Standard',
-    //   description: 'Some description',
-    //   imageName: 'this image',
-    //   number: '123',
-    //   price: '120',
-    //   rating: 5,
-    //   userId: '',
-    //   startDate: '',
-    //   endDate: '',
-    //   // showBookingForm?;
-    //   // totalPricing?;
-    //   checkIn: false,
-    // };
-    // this.roomService.addRoom(room).then(res => {
-    //   this.generalService.dismiss();
-    //   this.refreshRooms();
-    //   console.log(res);
-    // }).catch(error => {
-    //   this.generalService.dismiss();
-
-    //   console.dir(error);
-    // });
   }
 
   uploadImage() {
-    console.log('now upload image')
+    console.log('now upload image');
+  }
+
+  showReports() {
+    this.router.navigate(['reports']);
   }
 }
